@@ -1,2 +1,1 @@
-# mdet
-markdown editor
+# Initial Commit of mdet
