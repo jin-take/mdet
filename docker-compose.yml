@@ -1,0 +1,49 @@
+version: '3'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: "./Dockerfile-golang"
+    ports:
+      - "8080:8080"
+    container_name: api
+    depends_on:
+      - mysql
+    volumes:
+      - ./api:/go/src/github.com/jin237/modet/api
+    environment:
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+      MYSQL_DATABASE: mdet
+  
+  frontend:
+      build:
+        context: .
+        dockerfile: "./Dockerfile-nodejs"
+      volumes:
+        - ./frontend:/frontend
+      command: >
+        sh -c "cd frontend && yarn start"
+      ports:
+        - "3000:3000"
+      container_name: frontend
+      depends_on:
+        - app
+        - api
+      stdin_open: true
+
+  mysql:
+      image: mysql:5.7.22
+      environment:
+          MYSQL_ROOT_PASSWORD: admin
+          MYSQL_USER: admin
+          MYSQL_PASSWORD: admin
+          MYSQL_DATABASE: mdet
+      ports:
+        - "3306:3306"
+      container_name: mysql
+      volumes:
+        - ./mysql/data:/var/lib/mysql
+        - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+        - ./mysql/sql:/docker-entrypoint-initdb.d
