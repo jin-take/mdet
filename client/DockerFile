@@ -1,8 +1,8 @@
-FROM node:7.9.0
+FROM node:18.17.1
 
 WORKDIR /client
-ADD ./client/webpack.config.js /client/webpack.config.js
-ADD ./client/dist /client/dist
+ADD ./webpack.config.js /client/
+# ADD ./client/dist /client/dist
 
 RUN \
   npm init -y && \

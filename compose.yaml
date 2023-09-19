@@ -6,27 +6,25 @@ volumes:
 services:
   api:
     build:
-      context: .
-      dockerfile: src/api/Dockerfile
+      context: ./api/
+      dockerfile: Dockerfile
     volumes:
-      - ./src/api:/go/src/api
-      - vendor:/go/src/api/vendor
-    ports:
-      - 3030:3030
-    tty:
-      true
-  client:
-    build:
-      context: .
-      dockerfile: client/Dockerfile
-    volumes:
-      - ./client:/client
-      - ./client/dist:/client/dist
-      - /client/node_modules
+      - ./api:/go/api
     ports:
       - 8080:8080
-    tty:
-      true
+    command: bash -c "go run main.go"
+  # client:
+  #   build:
+  #     context: ./client/
+  #     dockerfile: Dockerfile
+  #   volumes:
+  #     - ./client:/client
+  #     # - ./client/dist:/client/dist
+  #     # - /client/node_modules
+  #   ports:
+  #     - 3000:3000
+  #   tty:
+  #     true
   # mysql:
   #   image: mysql:8.0.34
   #   environment:
