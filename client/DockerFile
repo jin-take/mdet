@@ -1,12 +1,8 @@
-FROM node:18.17.1
+FROM node:18.18.0-alpine3.18
+
+RUN apk update
+
+ENV TZ Asia/Tokyo
+ENV PATH $HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH
 
 WORKDIR /client
-ADD ./webpack.config.js /client/
-# ADD ./client/dist /client/dist
-
-RUN \
-  npm init -y && \
-  npm install --save react react-dom && \
-  npm install --save-dev webpack webpack-cli webpack-dev-server babel-loader babel-core babel-preset-react babel-preset-env
-
-CMD /client/node_modules/.bin/webpack-dev-server --hot

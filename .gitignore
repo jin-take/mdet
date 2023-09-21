@@ -1,1 +1,7 @@
-src/api/gin-bin
+# ALL
+.DS_Store
+
+# BE
+
+# DB
+./db
