@@ -22,7 +22,11 @@ docker compose build --no-cache
 # Dockerコンテナ立ち上げ
 docker compose up [-d]
 
-# 疎通確認
+# BE 疎通確認
 curl http://localhost:8080/ping
 # {"message":"pong"} が出力される
+
+# FE 疎通確認
+curl http://localhost:3000
+# もしくは 上記URLにブラウザでアクセス
 ```
