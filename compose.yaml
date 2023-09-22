@@ -21,8 +21,7 @@ services:
       - ./client:/client:cached
     ports:
       - 3000:3000
-    tty:
-      true
+    command: sh -c "npm run dev"
   # mysql:
   #   image: mysql:8.0.34
   #   environment:
