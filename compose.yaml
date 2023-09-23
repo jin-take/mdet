@@ -1,8 +1,5 @@
 version: '3'
 
-volumes:
-  vendor:
-
 services:
   api:
     build:
@@ -22,17 +19,19 @@ services:
     ports:
       - 3000:3000
     command: sh -c "npm run dev"
-  # mysql:
-  #   image: mysql:8.0.34
-  #   environment:
-  #       MYSQL_ROOT_PASSWORD: admin
-  #       MYSQL_USER: admin
-  #       MYSQL_PASSWORD: admin
-  #       MYSQL_DATABASE: jinjin
-  #   ports:
-  #     - "3306:3306"
-  #   container_name: mysql
-  #   volumes:
-  #     - ./mysql/data:/var/lib/mysql
-  #     - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
-  #     - ./mysql/sql:/docker-entrypoint-initdb.d
+  db:
+    container_name: db
+    build:
+      context: ./db/
+      dockerfile: Dockerfile
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: mdet
+      MYSQL_USER: mdet
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+      TZ: "Asia/Tokyo"
+    volumes:
+      - ./db/data:/var/lib/mysql:cached
+    platform: linux/amd64
