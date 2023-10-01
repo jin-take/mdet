@@ -3,6 +3,7 @@
 ## 前提
 
 - Dockerがインストールされていること
+- ngrokがインストールされていること
 
 ## GitHubからリポジトリをclone
 
@@ -22,11 +23,10 @@ docker compose build --no-cache
 # Dockerコンテナ立ち上げ
 docker compose up [-d]
 
-# BE 疎通確認
-curl http://localhost:8080/ping
-# {"message":"pong"} が出力される
+# ngrok起動
+ngrok http 8080
+# 「Forwarding」に記載されているURLを client/app/.env の API_URL に記述
 
-# FE 疎通確認
-curl http://localhost:3000
-# もしくは 上記URLにブラウザでアクセス
+# BE,FE 確認（URLにブラウザでアクセス）
+http://localhost:3000
 ```
