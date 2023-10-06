@@ -11,7 +11,7 @@ services:
       - 8080:8080
     depends_on:
       - db
-    command: bash -c "go run main.go"
+    command: air
   client:
     build:
       context: ./client/
@@ -20,7 +20,7 @@ services:
       - ./client:/client:cached
     ports:
       - 3000:3000
-    command: sh -c "npm run dev"
+    command: "npm run dev"
   db:
     container_name: db
     build:

@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -18,16 +20,18 @@ type Product struct {
 	Price uint
 }
 
+var Db *gorm.DB
+
 func main() {
 	// TODO: アーキテクチャを決め次第configで別ファイルに定義する
 	dsn := "mdet:password@tcp(db:3306)/mdet?charset=utf8&parseTime=True&loc=Local"
 
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
-	if err != nil {
-		log.Fatal(err)
+	var err error
+	if Db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{}); err != nil {
+		connectDb(dsn, 5)
 	}
 
-	db.AutoMigrate(&Product{})
+	Db.AutoMigrate(&Product{})
 
 	r := gin.Default()
 
@@ -42,5 +46,21 @@ func main() {
 			"message": "pong",
 		})
 	})
+
 	r.Run()
+}
+
+func connectDb(dsn string, retryCount int) {
+	fmt.Println("Retry connect DB")
+	var err error
+	retryCount--
+	if Db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{}); err != nil {
+		if retryCount > 0 {
+			time.Sleep(10 * time.Second)
+			connectDb(dsn, retryCount)
+			return
+		}
+		log.Fatal(err)
+		panic("failed to connect database")
+	}
 }
