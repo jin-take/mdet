@@ -8,7 +8,7 @@ import (
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"github.com/jin237/mdet/go/api/config"
+	"github.com/jin237/mdet/config"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
