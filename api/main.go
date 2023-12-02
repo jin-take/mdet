@@ -8,6 +8,7 @@ import (
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"github.com/jin237/mdet/go/api/config"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -23,8 +24,8 @@ type Product struct {
 var Db *gorm.DB
 
 func main() {
-	// TODO: アーキテクチャを決め次第configで別ファイルに定義する
-	dsn := "mdet:password@tcp(db:3306)/mdet?charset=utf8&parseTime=True&loc=Local"
+	config.LoadConfig()
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", config.DbUser, config.DbPassword, config.DbHost, config.DbPort, config.DbName)
 
 	var err error
 	if Db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{}); err != nil {
