@@ -2,26 +2,15 @@ package models
 
 import (
 	"time"
-
-	"gorm.io/gorm"
 )
 
 type Base struct {
-	ID        string    `json:"id"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
-}
-
-// 論理削除を行うモデルはこちらを使用する
-// Gormはdeleted_atがカラムにあると自動的に論理削除を行う
-// https://gorm.io/docs/delete.html#Soft-Delete
-type GormBase struct {
-	ID        string         `json:"id"`
-	CreatedAt time.Time      `json:"created_at"`
-	UpdatedAt time.Time      `json:"updated_at"`
-	DeletedAt gorm.DeletedAt `json:"deleted_at"`
+	ID        uint      `gorm:"primary_key"`
+	CreatedAt time.Time `gorm:"not null"`
+	UpdatedAt time.Time `gorm:"not null"`
 }
 
 type User struct {
 	Base
+	UUID string `gorm:"not null;unique;default:uuid()"`
 }
