@@ -28,12 +28,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - 3306:3306
-    environment:
-      MYSQL_DATABASE: mdet
-      MYSQL_USER: mdet
-      MYSQL_PASSWORD: password
-      MYSQL_ROOT_PASSWORD: password
-      TZ: "Asia/Tokyo"
+    env_file:
+      - ./api/.env
     volumes:
       - ./db/data:/var/lib/mysql:cached
     platform: linux/amd64

@@ -3,6 +3,7 @@
 
 # BE
 /api/.env
+/api/tmp/build-errors.log
 
 # DB
 /db/data/
