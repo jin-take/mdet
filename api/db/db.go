@@ -1,4 +1,4 @@
-package models
+package db
 
 import (
 	"fmt"
@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/jin237/mdet/config"
+	"github.com/jin237/mdet/models"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -19,7 +20,7 @@ func InitDB() (err error) {
 		connectDb(dsn, 5)
 	}
 
-	Db.AutoMigrate(&User{})
+	Db.AutoMigrate(&models.User{})
 
 	return nil
 }

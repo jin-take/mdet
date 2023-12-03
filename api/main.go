@@ -6,12 +6,12 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/jin237/mdet/config"
-	"github.com/jin237/mdet/models"
+	"github.com/jin237/mdet/db"
 )
 
 func main() {
 	config.LoadConfig()
-	models.InitDB()
+	db.InitDB()
 
 	r := gin.Default()
 
