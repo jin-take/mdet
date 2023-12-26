@@ -2,7 +2,7 @@ package db
 
 import (
 	"fmt"
-	"log"
+	"log/slog"
 	"time"
 
 	"github.com/jin237/mdet/config"
@@ -26,7 +26,7 @@ func InitDB() (err error) {
 }
 
 func connectDb(dsn string, retryCount int) {
-	fmt.Println("Retry connect DB")
+	slog.Info("Retry connect DB")
 	var err error
 	retryCount--
 	if Db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{}); err != nil {
@@ -35,7 +35,7 @@ func connectDb(dsn string, retryCount int) {
 			connectDb(dsn, retryCount)
 			return
 		}
-		log.Fatal(err)
+		slog.Error(err)
 		panic("failed to connect database")
 	}
 }

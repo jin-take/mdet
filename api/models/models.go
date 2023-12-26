@@ -12,5 +12,4 @@ type Base struct {
 
 type User struct {
 	Base
-	UUID string `gorm:"not null;unique;default:uuid()"`
 }
