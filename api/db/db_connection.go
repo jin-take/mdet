@@ -11,16 +11,17 @@ import (
 	"gorm.io/gorm"
 )
 
-var Db *gorm.DB
+var db *gorm.DB
 
-func InitDB() (err error) {
+func InitDB() error {
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", config.DbUser, config.DbPassword, config.DbHost, config.DbPort, config.DbName)
 
-	if Db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{}); err != nil {
+	var err error
+	if db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{}); err != nil {
 		connectDb(dsn, 5)
 	}
 
-	Db.AutoMigrate(&models.User{})
+	db.AutoMigrate(&models.User{})
 
 	return nil
 }
@@ -29,13 +30,13 @@ func connectDb(dsn string, retryCount int) {
 	slog.Info("Retry connect DB")
 	var err error
 	retryCount--
-	if Db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{}); err != nil {
+	if db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{}); err != nil {
 		if retryCount > 0 {
 			time.Sleep(10 * time.Second)
 			connectDb(dsn, retryCount)
 			return
 		}
-		slog.Error(err)
+		slog.Error(err.Error())
 		panic("failed to connect database")
 	}
 }
