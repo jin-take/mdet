@@ -21,7 +21,7 @@ func InitDB() error {
 		connectDb(dsn, 5)
 	}
 
-	db.AutoMigrate(&models.User{})
+	db.AutoMigrate(&models.User{}, &models.UserDetail{}, &models.Post{})
 
 	return nil
 }
