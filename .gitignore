@@ -4,6 +4,7 @@
 # BE
 /api/.env
 /api/tmp/build-errors.log
+/api/tmp/
 
 # DB
 /db/data/

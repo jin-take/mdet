@@ -34,7 +34,7 @@ type User struct {
 type UserDetail struct {
 	UuidBase
 	UserID       uint   `gorm:"not null;index"`
-	Name         string `gorm:"not null"`
+	UserName     string `gorm:"not null"`
 	Email        string `gorm:"not null;unique"`
 	ProfileImage string
 }
